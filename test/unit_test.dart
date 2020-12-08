@@ -46,4 +46,16 @@ void main() {
       'Success',
     );
   });
+
+  // Test to see if FirebaseAuthException works or not
+  test('create account exception', () async {
+    when(
+      mockFirebaseAuth.createUserWithEmailAndPassword(
+          email: 'patrick123@gmail.com', password: '123456'),
+    ).thenAnswer((realInvocation) => throw FirebaseAuthException(message: 'You messed up'));
+    expect(
+      await auth.createAccount(email: 'patrick123@gmail.com', password: '123465'),
+      'You messed up',
+    );
+  });
 }
