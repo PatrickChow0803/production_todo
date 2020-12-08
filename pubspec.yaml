@@ -28,10 +28,29 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
+  firebase_core: ^0.5.3
+  firebase_auth: ^0.18.4+1
+  cloud_firestore: ^0.14.4
+  lint: ^1.5.1
 
 dev_dependencies:
+#  Used for Unit Tests (need mockito & flutter_test)
+#  The goal of a unit test is to verify the correctness of a unit of logic under a variety of conditions.
+#  External dependencies of the unit under test are generally mocked out.
+#  NOTE* flutter_test: sdk: flutter are used for both Unit Tests and Widget tests
+  mockito:
+#  Used for widget testing (only need flutter_test)
+#  The goal of a widget test is to verify that the widget’s UI looks and interacts as expected.
+#  Testing a widget involves multiple classes and requires a test environment that provides the appropriate widget lifecycle context.
   flutter_test:
     sdk: flutter
+
+#  These are for Integration Tests (need flutter_driver & test)
+#  Integration tests work as a pair: first, deploy an instrumented application to a real device or emulator
+#  and then “drive” the application from a separate test suite, checking to make sure everything is correct along the way.
+  flutter_driver:
+    sdk: flutter
+  test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
