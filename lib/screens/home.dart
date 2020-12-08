@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:product_to_do/models/todo.dart';
 import 'package:product_to_do/services/auth.dart';
+import 'package:product_to_do/services/database.dart';
+import 'package:product_to_do/widgets/todo_card.dart';
 
 class Home extends StatefulWidget {
   final FirebaseAuth auth;
@@ -59,7 +62,15 @@ class _HomeState extends State<Home> {
                   IconButton(
                     key: const ValueKey("addButton"),
                     icon: const Icon(Icons.add),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_todoController.text != "") {
+                        setState(() {
+                          Database(firestore: widget.firestore).addTodo(
+                              uid: widget.auth.currentUser.uid, content: _todoController.text);
+                          _todoController.clear();
+                        });
+                      }
+                    },
                   )
                 ],
               ),
@@ -73,6 +84,35 @@ class _HomeState extends State<Home> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder(
+              stream: Database(firestore: widget.firestore)
+                  .streamTodos(uid: widget.auth.currentUser.uid),
+              builder: (BuildContext context, AsyncSnapshot<List<TodoModel>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.data.isEmpty) {
+                    return const Center(
+                      child: Text("You don't have any unfinished Todos"),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (_, index) {
+                      return TodoCard(
+                        firestore: widget.firestore,
+                        uid: widget.auth.currentUser.uid,
+                        todo: snapshot.data[index],
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: Text("loading..."),
+                  );
+                }
+              },
             ),
           ),
         ],
