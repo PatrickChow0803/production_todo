@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:product_to_do/screens/login.dart';
+import 'package:product_to_do/services/auth.dart';
 
 void main() {
   runApp(App());
@@ -55,6 +57,26 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(stream: ,);
+    return StreamBuilder(
+      // Auth Stream
+      stream: Auth(auth: _auth).user,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        // If the auth stream is working..
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.data?.uid == null) {
+            // login screen
+            return Login();
+          } else {
+            // register screen
+          }
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
   }
 }
