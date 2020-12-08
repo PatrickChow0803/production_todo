@@ -32,13 +32,17 @@ class _LoginState extends State<Login> {
                 TextFormField(
                   key: const ValueKey("username"),
                   textAlign: TextAlign.center,
-                  decoration: const InputDecoration(hintText: "Username"),
+                  decoration: const InputDecoration(hintText: "Email"),
                   controller: _emailController,
                 ),
                 TextFormField(
                   key: const ValueKey("password"),
                   textAlign: TextAlign.center,
-                  decoration: const InputDecoration(hintText: "Password"),
+                  decoration: const InputDecoration(
+                    hintText: "Password",
+                  ),
+                  obscureText: true,
+                  // validator: (val) => val.length < 6 ? 'Password too short.' : null,
                   controller: _passwordController,
                 ),
                 const SizedBox(
@@ -57,6 +61,7 @@ class _LoginState extends State<Login> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(returnVal),
+                        duration: const Duration(seconds: 2),
                       ));
                     }
                   },
@@ -75,6 +80,7 @@ class _LoginState extends State<Login> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(returnVal),
+                        duration: const Duration(seconds: 2),
                       ));
                     }
                   },

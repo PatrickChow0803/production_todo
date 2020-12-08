@@ -15,6 +15,15 @@ class Auth {
       );
       return 'Success';
     } on FirebaseAuthException catch (e) {
+      if (email.isEmpty) {
+        return 'Email is empty';
+      }
+      if (!email.endsWith('.com')) {
+        return 'Not a proper email';
+      }
+      if (password.isEmpty) {
+        return 'Password is empty';
+      }
       return e.toString();
     } catch (e) {
       rethrow;
@@ -29,6 +38,15 @@ class Auth {
       );
       return 'Success';
     } on FirebaseAuthException catch (e) {
+      if (email.isEmpty) {
+        return 'Email is empty';
+      }
+      if (!email.endsWith('.com')) {
+        return 'Not a proper email';
+      }
+      if (password.isEmpty) {
+        return 'Password is empty';
+      }
       return e.toString();
     } catch (e) {
       rethrow;
