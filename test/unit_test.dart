@@ -30,8 +30,20 @@ void main() {
   tearDown(() {});
 
   // Test to see if authStateChanges() actually work
-  test('emit ocurs', () async {
+  test('emit occurs', () async {
     // Used for anything that expects futures
     expectLater(auth.user, emitsInOrder([_mockUser]));
+  });
+
+  // Test to see if createUserWithEmailAndPassword() actually work
+  test('create account', () async {
+    when(
+      mockFirebaseAuth.createUserWithEmailAndPassword(
+          email: 'patrick123@gmail.com', password: '123456'),
+    ).thenAnswer((realInvocation) => null);
+    expect(
+      await auth.createAccount(email: 'patrick123@gmail.com', password: '123465'),
+      'Success',
+    );
   });
 }
