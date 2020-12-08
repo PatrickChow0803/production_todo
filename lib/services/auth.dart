@@ -7,7 +7,7 @@ class Auth {
   // Anything auth changes, return a user for it
   Stream<User> get user => auth.authStateChanges();
 
-  Future<String> createAccount(String email, String password) async {
+  Future<String> createAccount({String email, String password}) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email.trim(),
@@ -21,7 +21,7 @@ class Auth {
     }
   }
 
-  Future<String> signIn(String email, String password) async {
+  Future<String> signIn({String email, String password}) async {
     try {
       await auth.signInWithEmailAndPassword(
         email: email.trim(),

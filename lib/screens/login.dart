@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:product_to_do/services/auth.dart';
 
 class Login extends StatefulWidget {
   final FirebaseAuth auth;
@@ -45,12 +46,38 @@ class _LoginState extends State<Login> {
                 ),
                 RaisedButton(
                   key: const ValueKey("signIn"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final String returnVal = await Auth(auth: widget.auth).signIn(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                    if (returnVal == "Success") {
+                      _emailController.clear();
+                      _passwordController.clear();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(returnVal),
+                      ));
+                    }
+                  },
                   child: const Text("Sign In"),
                 ),
                 FlatButton(
                   key: const ValueKey("createAccount"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final String returnVal = await Auth(auth: widget.auth).createAccount(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                    if (returnVal == "Success") {
+                      _emailController.clear();
+                      _passwordController.clear();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(returnVal),
+                      ));
+                    }
+                  },
                   child: const Text("Create Account"),
                 )
               ],
