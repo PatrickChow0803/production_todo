@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // Import the firebase_core plugin
@@ -19,16 +21,24 @@ class App extends StatelessWidget {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return SomethingWentWrong();
+          return const Scaffold(
+            body: Center(
+              child: Text('Error'),
+            ),
+          );
         }
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MyAwesomeApp();
+          return Root();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return Loading();
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
@@ -40,8 +50,11 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return StreamBuilder(stream: ,);
   }
 }
